@@ -1,0 +1,86 @@
+CREATE DATABASE GAREN;
+
+USE GAREN;
+
+CREATE TABLE ANFITRIAO (
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  endereco VARCHAR(255) NOT NULL,
+  nro INT NOT NULL,
+  bairro VARCHAR(255) NOT NULL,
+  cidade VARCHAR(255) NOT NULL,
+  cep INT NOT NULL,
+  PRIMARY KEY(idUsuario),
+  foreign key (idUsuario) references usuario(idUsuario)
+);
+
+CREATE TABLE CARTAO (
+  idCARTAO INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  nroCartao INT NOT NULL,
+  dataValid DATE NOT NULL,
+  nomeCartao VARCHAR(255) NOT NULL,
+  PRIMARY KEY(idCARTAO),
+  foreign key (idUsuario) references usuario(idUsuario)
+);
+
+CREATE TABLE DADOSBANCARIOS (
+  idDADOSBANCARIOS INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  conta INT NOT NULL,
+  agencia INT NOT NULL,
+  banco INT NOT NULL,
+  PRIMARY KEY(idDADOSBANCARIOS),
+  foreign key (idUsuario) references usuario(idUsuario)
+);
+
+CREATE TABLE ESTADIA (
+  idEstadia INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  VEICULO_USUARIO_idUSUARIO INTEGER UNSIGNED NOT NULL,
+  VEICULO_idVEICULO INTEGER UNSIGNED NOT NULL,
+  GARAGEM_idGARAGEM INTEGER UNSIGNED NOT NULL,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  horas INT NOT NULL,
+  preco DOUBLE NOT NULL,
+  dataEntrada  DATE NOT NULL,
+  dataSaida DATE NOT NULL,
+  PRIMARY KEY(idEstadia),
+  foreign key (idUsuario) references usuario(idUsuario),
+  foreign key (VEICULO_idVEICULO) references veiculo(idVEICULO),
+  foreign key (GARAGEM_idGARAGEM) references garagem(idGARAGEM)
+);
+
+CREATE TABLE GARAGEM (
+  idGARAGEM INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  nroVagas INT NOT NULL,
+  enderecoGar VARCHAR(255) NOT NULL,
+  bairroGar VARCHAR(255) NOT NULL,
+  cepGar INT NOT NULL,
+  nroGar INT NOT NULL,
+  cidadeGar VARCHAR(255) NOT NULL,
+  tamanho VARCHAR(255) NOT NULL,
+  PRIMARY KEY(idGARAGEM),
+  foreign key (idUsuario) references usuario(idUsuario)
+);
+
+CREATE TABLE USUARIO (
+  idUsuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  CPF INT NOT NULL,
+  tel INT NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  PRIMARY KEY(idUSUARIO)
+);
+
+CREATE TABLE VEICULO (
+  idVEICULO INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idUsuario INTEGER UNSIGNED NOT NULL,
+  placa VARCHAR(255) NOT NULL,
+  modelo VARCHAR(255) NOT NULL,
+  cor VARCHAR(255) NOT NULL,
+  tipo VARCHAR(255) NOT NULL,
+  PRIMARY KEY(idVEICULO),
+  foreign key (idUsuario) references usuario(idUsuario)
+);
+
